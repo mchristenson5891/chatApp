@@ -13,21 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
+
 'use strict';
+
+function showBtn() {
+  console.log(btn, "<<<<----- this is the btn")
+}
+
+showBtn()
+
+
+
 
 // Signs-in Friendly Chat.
 function signIn() {
-  alert('TODO: Implement Google Sign-In');
+  // alert('TODO: Implement Google Sign-In');
   // TODO 1: Sign in Firebase with credential from the Google user.
 }
 
 // Signs-out of Friendly Chat.
 function signOut() {
+
   // TODO 2: Sign out of Firebase.
 }
 
 //Initialize firebase.
-function initFirebase(){
+function initFirebase() {
   // TODO
 }
 // Initiate firebase auth.
@@ -104,7 +117,7 @@ function onMessageFormSubmit(e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
   if (messageInputElement.value && checkSignedInWithMessage()) {
-    saveMessage(messageInputElement.value).then(function() {
+    saveMessage(messageInputElement.value).then(function () {
       // Clear message text field and re-enable the SEND button.
       resetMaterialTextfield(messageInputElement);
       toggleButton();
@@ -168,11 +181,11 @@ function resetMaterialTextfield(element) {
 
 // Template for messages.
 var MESSAGE_TEMPLATE =
-    '<div class="message-container">' +
-      '<div class="spacing"><div class="pic"></div></div>' +
-      '<div class="message"></div>' +
-      '<div class="name"></div>' +
-    '</div>';
+  '<div class="message-container">' +
+  '<div class="spacing"><div class="pic"></div></div>' +
+  '<div class="message"></div>' +
+  '<div class="name"></div>' +
+  '</div>';
 
 // Adds a size to Google Profile pics URLs.
 function addSizeToGoogleProfilePic(url) {
@@ -252,7 +265,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
   } else if (imageUrl) { // If the message is an image.
     var image = document.createElement('img');
-    image.addEventListener('load', function() {
+    image.addEventListener('load', function () {
       messageListElement.scrollTop = messageListElement.scrollHeight;
     });
     image.src = imageUrl + '&' + new Date().getTime();
@@ -260,7 +273,7 @@ function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
     messageElement.appendChild(image);
   }
   // Show the card fading-in and scroll to view the new message.
-  setTimeout(function() {div.classList.add('visible')}, 1);
+  setTimeout(function () { div.classList.add('visible') }, 1);
   messageListElement.scrollTop = messageListElement.scrollHeight;
   messageInputElement.focus();
 }
@@ -279,8 +292,8 @@ function toggleButton() {
 function checkSetup() {
   if (!window.firebase || !(firebase.app instanceof Function) || !firebase.app().options) {
     window.alert('You have not configured and imported the Firebase SDK. ' +
-        'Make sure you go through the codelab setup instructions and make ' +
-        'sure you are running the codelab using `firebase serve`');
+      'Make sure you go through the codelab setup instructions and make ' +
+      'sure you are running the codelab using `firebase serve`');
   }
 }
 // Shortcuts to DOM Elements.
@@ -296,6 +309,25 @@ var userNameElement;
 var signInButtonElement;
 var signOutButtonElement;
 var signInSnackbarElement;
+var btn = document.getElementById("submit")
+
+btn.addEventListener('click', function () {
+  let p = document.createElement("p");
+  const msg = document.querySelector('#message')
+  const msgContainer = document.querySelector('#messages')
+  p.innerText = msg.value
+  msgContainer.append(p)
+  msg.value = ""
+  console.log(msgContainer, "<---- msgContainer", "p:", p)
+})
+
+
+function addEle(text) {
+  let p = document.createElement("p");
+  let f = document.querySelector('form')
+  p.innerText = text
+  f.appendChild(p)
+}
 
 // initialize Firebase
 initFirebase();
@@ -312,7 +344,7 @@ messageInputElement.addEventListener('keyup', toggleButton);
 messageInputElement.addEventListener('change', toggleButton);
 
 // Events for image upload.
-imageButtonElement.addEventListener('click', function(e) {
+imageButtonElement.addEventListener('click', function (e) {
   e.preventDefault();
   mediaCaptureElement.click();
 });
@@ -325,3 +357,16 @@ initFirebaseAuth();
 
 // We load currently existing chat messages and listen to new ones.
 loadMessages();
+
+
+for (let i = 0; i < snake.cells.length; i++) {
+  let curr_cell = snake.cells[i];
+  for (let j = i + 1; j < snake.cells.length; j++) {
+    let another_cell = snake.cells[j];
+    //if the current cell occupies same space as another cell, reset game
+    if (curr_cell.x === another_cell.x && curr_cell.y === another_cell.y) {
+      alert("GAME OVER");
+      document.location.reload();
+    }
+  }
+}
